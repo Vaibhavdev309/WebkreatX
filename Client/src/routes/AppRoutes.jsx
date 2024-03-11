@@ -16,15 +16,17 @@ import Profile from "../pages/Profile";
 import RideRequests from "../pages/RideRequests";
 import Transactions from "../pages/Transactions";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={<FallbackLoading />}>
       <Routes>
-        {/* <Route path="/Login" element={<></>} /> */}
+         <Route path="/Login" element={<Login />} /> 
         <Route path="*" element={<h1>Not Found</h1>} />
 
-        {/* <Route path=/Register" element={<></>} /> */}
+         <Route path="/Register" element={<Register />} /> 
 
         <Route path="/" element={<ProtectedRoute/>}>
         <Route path="/home" element={<Home/>} />
