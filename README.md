@@ -14,7 +14,7 @@
 
 #### Proposed Features:
 
-```http
+```
 - Establish secure login with email verification using OTP. 
 - Enable driver scheduling for rides based on their fair.
 - Allow passengers to search for rides based on location and time.
@@ -25,7 +25,7 @@
 ```
 #### Our Innovation:
 
-```http
+```
 - Integrate Aadhaar ID and driving license verification. 
 - Implementing Voice Chat in chat room for more convenience.
 ```
