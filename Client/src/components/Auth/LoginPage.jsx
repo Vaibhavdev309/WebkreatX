@@ -6,22 +6,18 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsKey } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-
-
-import "./styling.css";
+import "./Login.scss";
 import { AuthContext } from "../../context/ContextProvider";
 
 export default function LoginPage() {
-
- 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
-  const {initialLoad}=useContext(AuthContext);
-  const navigate=useNavigate();
+  const { initialLoad } = useContext(AuthContext);
+  const navigate = useNavigate();
   const change = (e) => {
     setFormData({
       ...formData,
@@ -38,9 +34,9 @@ export default function LoginPage() {
       console.log(response);
       if (response.data) {
         localStorage.setItem("profile", JSON.stringify(response.data));
-       initialLoad();
-        navigate('/')
-        return <Navigate to="/" />;
+        initialLoad();
+        navigate("/searchride");
+        return <Navigate to="/searchride" />;
       } else {
         setResponseMessage(response.data);
       }
@@ -53,10 +49,51 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container">
-      <div className="form-box">
+    <div>
+      <div class="login-box">
+        <h2>Login</h2>
+        <form>
+          <div class="user-box">
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              placeholder="Email"
+              onChange={change}
+            />
+            <label>Email</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              placeholder="Password"
+              onChange={change}
+            />
+            <label>Password</label>
+          </div>
+          <a onClick={handleLogin}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <div>
+              {loading ? (
+                <div>Loading...</div>
+              ) : (
+                <div onClick={handleLogin}>Log in</div>
+              )}
+            </div>
+          </a>
+        </form>
+      </div>
+    </div>
+  );
+  {
+    /* <div className="container-login">
+      <div className="form-box-login">
         <h1>Log in</h1>
-
         <div className="input-group">
           <div className="input-field">
             <AiOutlineUser className="react-icons" />
@@ -89,18 +126,15 @@ export default function LoginPage() {
                 Log in
               </div>
             )}
-           
           </div>
           <div className="register">
             Don't have an account? <Link to="/register">Register</Link>
           </div>
-
-          
         </div>
       </div>
       {responseMessage && (
         <div className="error-message">{responseMessage}</div>
       )}
-    </div>
-  );
+    </div> */
+  }
 }
