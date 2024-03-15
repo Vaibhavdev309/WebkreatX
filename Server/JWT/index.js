@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
 const app = express();
 const PORT = 5000;
-mongoose.connect('mongodb://localhost:27017/myapp', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('', { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 app.use('/auth', authRouter);
