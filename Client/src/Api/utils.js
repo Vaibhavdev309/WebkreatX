@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env..REACT_APP_API_URL;
+const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 const ADMIN_URL = `${BASE_URL}/admin`;
 
 const authInterceptor = (req) => {
@@ -26,6 +26,10 @@ export const API = axios.create({
 export const ADMIN_API = axios.create({
   baseURL: ADMIN_URL,
 });
+
+
+
+
 
 
 API.interceptors.request.use(authInterceptor);
