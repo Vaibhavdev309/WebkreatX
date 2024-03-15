@@ -28,10 +28,6 @@ export const ADMIN_API = axios.create({
 });
 
 
-
-
-
-
 API.interceptors.request.use(authInterceptor);
 ADMIN_API.interceptors.request.use(adminAuthInterceptor);
 

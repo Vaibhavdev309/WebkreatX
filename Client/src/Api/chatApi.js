@@ -1,7 +1,4 @@
 import { API, handleApiError } from "./utils";
-
-
-
 export const getChats = async () => {
     try {
       const res = await API.get("/chat/getChats");
@@ -11,10 +8,6 @@ export const getChats = async () => {
       return handleApiError(error);
     }
   };
-
-
-
-
   export const getMessages = async (limit,rideId,createdAt) => {
     try {
       const res = await API.get(`/chat/getMessages?limit=${limit}&rideId=${rideId}&createdAt=${createdAt}`);
@@ -24,11 +17,6 @@ export const getChats = async () => {
       return handleApiError(error);
     }
   };
-
-
-
-
-
   export const postMessage = async (data) => {
     try {
       const res = await API.post("/chat/postMessage",data);
@@ -39,11 +27,6 @@ export const getChats = async () => {
       return handleApiError(error);
     }
   };
-
-
-
-
-
   export const createChat = async (data) => {
     try {
       const res = await API.post(`/chat/createChat`,data);

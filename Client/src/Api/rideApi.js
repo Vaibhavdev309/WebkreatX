@@ -104,22 +104,3 @@ export const rideRequest = async (data) => {
 };
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
