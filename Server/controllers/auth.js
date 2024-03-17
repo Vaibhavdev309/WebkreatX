@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 const login = async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+const email = req.body.email;
+const password = req.body.password;
   
   try {
     let loadedUser = await User.findOne({ emailId: email });
