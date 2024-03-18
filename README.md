@@ -1,6 +1,6 @@
 ## Carpooling 
 
-**Team Name:** Code Slayers                                                       
+**Team Name:** WebKreatX                                                    
 **Team Members name:**
  - [Vaibhav Kumar Maurya](https://github.com/Vaibhavdev309)  
  - [Kushagra Verma](https://github.com/kushagra572)  
