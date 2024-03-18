@@ -66,9 +66,9 @@
 ## Installation
 
 1. Clone the repository:
-   `git clone https://github.com/pratik4505/Carpooling-.git`
-
-2. Install dependencies for both frontend and backend:
+   `git clone  https://github.com/Vaibhavdev309/WebkreatX.git`
+  
+3. Install dependencies for both frontend and backend:
 
 ```
    cd server
