@@ -14,27 +14,32 @@ import Notifications from "../pages/Notifications";
 import PendingPayments from "../pages/PendingPayments";
 import Profile from "../pages/Profile";
 import RideRequests from "../pages/RideRequests";
-import Transactions from "../components/Transactions/Transactions";
+
 import Home from "../pages/Home";
 import Login from "../components/Login/Login";
 import Register from "../components/Login/Register";
 import LoginPage from "../components/Auth/LoginPage";
 import SignUp from "../components/Auth/SignUp";
 import Error from "../components/Error/Error";
-import Payout from "../pages/Payout";
+import DoneRides from "../pages/PastRides";
+import Transactions from "../components/Transactions/Transactions";
+import { DlVerify } from "../components/DL verification/DlVerify";
+import { DlCheck } from "./DlCheck";
+import ForgotPassword from "../components/Auth/ForgotPassword";
 
 const AppRoutes = () => {
   return (
     <Suspense fallback={<FallbackLoading />}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="*" element={<Error />} />
 
         <Route path="/register" element={<SignUp />} />
 
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<Home />} />
-          <Route path="/publishRide" element={<CreateRide />} />
+          <Route path="/publishRide" element={<DlCheck />} />
           <Route path="/searchRide" element={<SearchRides />} />
           <Route path="/chats" element={<Chats />} />
           <Route path="/bookedRides" element={<BookedRides />} />
@@ -44,7 +49,8 @@ const AppRoutes = () => {
           <Route path="/profile/:ownerId" element={<Profile />} />
           <Route path="/rideRequests" element={<RideRequests />} />
           <Route path="/transactions" element={<Transactions />} />
-          <Route path="/payout" element={<Payout />} />
+          <Route path="/pastrides" element={<DoneRides />} />
+          <Route path="/verifyDl" element={<DlVerify />} />
           {/* <Route path="/login" element = {<Login/>}/>
           <Route path="/Register" element = {<Register/>}/> */}
         </Route>
