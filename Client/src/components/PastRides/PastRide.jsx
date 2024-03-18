@@ -38,6 +38,7 @@ const PastRide = (props) => {
           {props.to}
         </td>
         <td className="sm:p-3 py-2 text-center px-1 border-b border-gray-200 dark:border-gray-800">
+<<<<<<< HEAD
           {(props.rating===0|| props.rating===undefined )? 'Not Rated':''}
           {[1, 2, 3, 4, 5].map((star, subIndex) => (
                 <span
@@ -50,6 +51,9 @@ const PastRide = (props) => {
                   {star <= props.rating ? "★" :'' }
                 </span>
               ))}
+=======
+          {props.rating}
+>>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
         </td>
         <td className="sm:p-3 py-2 text-center px-1 border-b border-gray-200 dark:border-gray-800">
           <div className="flex text-center items-center">
@@ -71,8 +75,19 @@ const PastRide = (props) => {
             </button>
             <GoogleMapUtil
               coordinates={[
+<<<<<<< HEAD
                 props.sourceCo,
                 props.destinationCo,
+=======
+                {
+                  lat: 25.492120000000003,
+                  lng: 81.86776,
+                },
+                {
+                  lat: 25.49208,
+                  lng: 81.86825,
+                },
+>>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
               ]}
               polyline={props.polyline}
             />

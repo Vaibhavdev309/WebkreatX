@@ -53,7 +53,6 @@ export const getLatestNotifications = async () => {
   }
 };
 
-
 export const contactUs = async (formData) => {
   try {
     const res = await API.post(`/user/contactUs`, formData);
