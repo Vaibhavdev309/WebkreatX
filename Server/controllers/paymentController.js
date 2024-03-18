@@ -1,8 +1,6 @@
 const stripe = require("stripe")(
-  process.env.STRIPE_SECRET_KEY
+  "sk_test_51OtzJ5SCoDbx1gBwOk3mV8iKObmgpo06QA6RmZKS2ooZ0ye0qIb7z1KbjT9eR2vUpBUTKJ1ZZjZlMH3jTKlowelE00DWIZ3le4"
 );
-
-
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 const User = require("../models/User");
 const AvailableRide = require("../models/AvailableRide");
@@ -30,8 +28,33 @@ function generateUniqueCode() {
 
   return uniqueCode;
 }
+const doPayout = async (req, res) => {
+  try {
+    const transfer = await stripe.transfers.create({
+      amount: 400,
+      currency: "usd",
+      destination: "7766260423500783",
+      transfer_group: "ORDER_95",
+    });
 
+    console.log("Payout created:", transfer);
+  } catch (error) {
+    console.error("Error creating payout:", error);
+  }
+};
 
+const createRefund = async (req, res) => {
+  try {
+    const refund = await stripe.refunds.create({
+      payment_intent: "pi_3OuC14SCoDbx1gBw1dLe45EX",
+    });
+    console.log("Refund created:", refund);
+    res.status(200).json({ success: true, refund });
+  } catch (error) {
+    console.error("Error creating refund:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
 
 const checkout = async (req, res) => {
   const data = req.body;
@@ -41,33 +64,36 @@ const checkout = async (req, res) => {
 
     // Create a Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: data.description,
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: data.description,
+            },
+            unit_amount: Math.min(9999, amountInCents), //max amount 9999usd allowed
           },
-          unit_amount: Math.min(9999, amountInCents), //max amount 9999usd allowed
+          quantity: 1,
         },
-        quantity: 1,
-      }],
-      mode: 'payment',
+      ],
+      mode: "payment",
       success_url: process.env.CLIENT_URL,
-      cancel_url: `${process.env.CLIENT_URL}/paymentFailed`, 
+      cancel_url: `${process.env.CLIENT_URL}/paymentFailed`,
       customer_email: data.email,
       payment_intent_data: {
         metadata: {
           key: data.key,
           paidBy: data.userId,
-        }
+        },
       },
     });
+    console.log("The session is ", session);
 
     // Redirect the user to the Checkout page URL
     res.redirect(303, session.url);
   } catch (error) {
-    console.error('Error creating session:', error.message);
+    console.error("Error creating session:", error.message);
     res.status(400).json({ error: { message: error.message } });
   }
 };
@@ -75,35 +101,43 @@ const checkout = async (req, res) => {
 const paymentWebhook = async (request, response) => {
   const sig = request.headers["stripe-signature"];
   let event;
+  console.log("The sig is ", sig);
   //console.log('request.body',request.body);
   try {
-    event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(
+      request.rawBody,
+      sig,
+      endpointSecret
+    );
+    console.log("The event is ", event);
   } catch (err) {
     console.error("Webhook Error:", err.message);
     return response.status(400).send(`Webhook Error: ${err.message}`);
   }
   //console.log(event);
- 
-  console.log(event)
-console.log('---------------------------------------------------------------------------------')
+
+  console.log(event);
+  console.log(
+    "---------------------------------------------------------------------------------"
+  );
   try {
     switch (event.type) {
       case "payment_intent.succeeded":
         const session = event.data.object;
         const customData = session.metadata;
-       //console.log("session",session);
+        //console.log("session",session);
         // console.log("customData",customData);
-       console.log("*****",customData,"****");
+        console.log("*****", customData, "****");
         // Access user schema and retrieve pendingPayments
         const user = await User.findById(customData.paidBy);
         const value = user.pendingPayments.get(customData.key);
 
         // Delete the key from pendingPayments map
-        
-       user.pendingPayments.delete(customData.key);
+
+        user.pendingPayments.delete(customData.key);
 
         // Update user's pendingPayments
-       
+
         await user.save();
 
         // Access AvailableRide schema and retrieve paidTo data
@@ -115,10 +149,10 @@ console.log('-------------------------------------------------------------------
         }
 
         const paidTo = availableRide.driverId;
-        
+
         // Subtract booked seats from available seats
         availableRide.availableSeats -= value.seats;
-        
+
         // Save the updated document
         await availableRide.save();
 
@@ -144,12 +178,12 @@ console.log('-------------------------------------------------------------------
           userId: customData.paidBy,
           source: value.pickUpAddress,
           destination: value.destinationAddress,
-          user: 'passenger',
+          user: "passenger",
           rating: {},
-          overview_polyline: availableRide.overview_polyline  // Ensure overview_polyline exists
+          overview_polyline: availableRide.overview_polyline, // Ensure overview_polyline exists
         });
         await pastRide.save();
-  
+
         // Create booked ride entry for the passenger
         const bookedRide = new BookedRide({
           rideId: value.rideId,
@@ -186,17 +220,18 @@ console.log('-------------------------------------------------------------------
     }
   } catch (error) {
     console.error("Error processing event:", error);
-    return response.status(500).send(`Error processing event: ${error.message}`);
+    return response
+      .status(500)
+      .send(`Error processing event: ${error.message}`);
   }
 
   // Return a 200 response to acknowledge receipt of the event
   response.status(200).send();
 };
 
-
-
-
 module.exports = {
+  doPayout,
   checkout,
   paymentWebhook,
+  createRefund,
 };

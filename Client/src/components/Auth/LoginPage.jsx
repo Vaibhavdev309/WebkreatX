@@ -16,7 +16,7 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
-  const { initialLoad } = useContext(AuthContext);
+  const { initialLoad, setIsDlVerified } = useContext(AuthContext);
   const navigate = useNavigate();
   const change = (e) => {
     setFormData({
@@ -33,10 +33,11 @@ export default function LoginPage() {
 
       console.log(response);
       if (response.data) {
-        localStorage.setItem("profile", JSON.stringify(response.data));
+        setIsDlVerified(response.data.isDlVerified);
+        localStorage.setItem("profile", JSON.stringify(response.data.data));
         initialLoad();
-        navigate("/searchride");
-        return <Navigate to="/searchride" />;
+        navigate("/");
+        return <Navigate to="/" />;
       } else {
         setResponseMessage(response.data);
       }
@@ -50,10 +51,10 @@ export default function LoginPage() {
 
   return (
     <div>
-      <div class="login-box">
+      <div className="login-box">
         <h2>Login</h2>
         <form>
-          <div class="user-box">
+          <div className="user-box">
             <input
               type="text"
               name="email"
@@ -63,7 +64,7 @@ export default function LoginPage() {
             />
             <label>Email</label>
           </div>
-          <div class="user-box">
+          <div className="user-box">
             <input
               type="password"
               name="password"
@@ -73,19 +74,36 @@ export default function LoginPage() {
             />
             <label>Password</label>
           </div>
-          <a onClick={handleLogin}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <div>
-              {loading ? (
-                <div>Loading...</div>
-              ) : (
-                <div onClick={handleLogin}>Log in</div>
-              )}
-            </div>
-          </a>
+          <div className="flex justify-between">
+            <a className="cursor-pointer" onClick={handleLogin}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <div>
+                {loading ? (
+                  <div>Loading...</div>
+                ) : (
+                  <div onClick={handleLogin}>Log in</div>
+                )}
+              </div>
+            </a>
+            <a className="cursor-pointer" onClick={() => navigate("/register")}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <div>
+                {loading ? (
+                  <div>Loading...</div>
+                ) : (
+                  <div onClick={() => navigate("/register")}>Register</div>
+                )}
+              </div>
+            </a>
+          </div>
+
+          <Link to="/forgotPassword">Forgot Password</Link>
         </form>
       </div>
     </div>

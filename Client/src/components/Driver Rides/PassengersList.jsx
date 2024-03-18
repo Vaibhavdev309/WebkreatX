@@ -2,44 +2,29 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { verifyCode } from "../../Api/rideApi";
 import { VerifiedIcon } from "../icons";
+import CommonLoading from "../loader/CommonLoading";
+import { modifyRide } from "../../utils/util";
+
 export default function PassengersList(props) {
   const passengers = props.data;
   const [Verify, setVerify] = useState(true);
   const [code, setCode] = useState({});
-
-  function modifyRide(
-    rides,
-    rideId,
-    passengerId,
-    newCodeVerified,
-    newRideCancelled
-  ) {
-    // Modify the rides array
-    for (let i = 0; i < rides.length; i++) {
-      if (rides[i]._id === rideId) {
-        const passengers = rides[i].passengers;
-        for (let j = 0; j < passengers.length; j++) {
-          if (passengers[j]._id === passengerId) {
-            passengers[j].codeVerified = newCodeVerified;
-            passengers[j].rideCancelled = newRideCancelled;
-            return; // Stop searching once passenger is modified
-          }
-        }
-      }
-    }
-  }
+  const [loading, setLoading] = useState(false);
+  
   const sendCode = async (id) => {
     if (!code[id]) return;
+    setLoading(true);
     try {
       const res = await verifyCode({ _id: id, code: code[id] });
       if (!res.error) {
         const { codeVerified, rideCancelled } = res.data;
         setVerify(codeVerified);
         const rides = props.rides;
-        //show a message if code verified is false
+        
         modifyRide(rides, props.rideId, id, codeVerified, rideCancelled);
 
         props.updateRides(rides);
+        setLoading(false);
       } else {
         console.log(res.error);
       }
@@ -62,6 +47,7 @@ export default function PassengersList(props) {
           </span>
         </div>
       )}
+      {loading&&<CommonLoading/>}
       {passengers.map((value, key) => (
         <div key={key} className="border-b border-gray-300 py-4">
           <Link to={`/profile/${value.passengerId}`}>

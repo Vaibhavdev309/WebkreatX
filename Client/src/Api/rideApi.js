@@ -23,6 +23,7 @@ export const postRequest = async (action, key) => {
 export const getAcceptedRides = async () => {
   try {
     const res = await API.get("/rides/getAccepetedRides");
+    console.log("The res is ", res);
     if (res.status === 200) return { error: null, data: res.data };
     else return { error: res.data.error, data: null };
   } catch (error) {
@@ -71,31 +72,29 @@ export const getCoRiders = async (rideId) => {
 };
 
 export const postRatings = async (data) => {
-    try {
-      const res = await API.post(`/rides/postRatings`,{...data});
-      if (res.status === 200) return { error: null, data: res.data };
-      else return { error: res, data: null };
-    } catch (error) {
-      return handleApiError(error);
-    }
-  };
+  try {
+    const res = await API.post(`/rides/postRatings`, { ...data });
+    if (res.status === 200) return { error: null, data: res.data };
+    else return { error: res, data: null };
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
 
-  
 export const getDriverRides = async () => {
-    try {
-      const res = await API.get("/rides/getDriverRides");
-      if (res.status === 200) return { error: null, data: res.data };
-      else return { error: res, data: null };
-    } catch (error) {
-      return handleApiError(error);
-    }
-  };
+  try {
+    const res = await API.get("/rides/getDriverRides");
+    if (res.status === 200) return { error: null, data: res.data };
+    else return { error: res, data: null };
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
 
-  
 export const rideRequest = async (data) => {
-  try { 
-    const res = await API.post(`/rides/rideRequest`,data);
-   
+  try {
+    const res = await API.post(`/rides/rideRequest`, data);
+
     if (res.status === 200) return { error: null, data: res.data };
     else return { error: res, data: null };
   } catch (error) {
@@ -104,13 +103,45 @@ export const rideRequest = async (data) => {
 };
 
 export const verifyCode = async (data) => {
-  try { 
-    const res = await API.post(`/rides/verifyCode`,data);
-   
+  try {
+    const res = await API.post(`/rides/verifyCode`, data);
+
     if (res.status === 200) return { error: null, data: res.data };
     else return { error: res, data: null };
   } catch (error) {
     return handleApiError(error);
   }
 };
-  
+
+export const getPastRides = async () => {
+  try {
+    const res = await API.get("/rides/pastrides");
+    // Assuming the API response contains transactions data
+    return res.data;
+  } catch (error) {
+    handleApiError(error); // Handle API errors
+    throw new Error("Failed to fetch past rides"); // Throw custom error
+  }
+};
+
+export const cancelRide = async (bookedId) => {
+  try {
+    const res = await API.post("/rides/cancelRide", { bookedId });
+    // Assuming the API response contains transactions data
+    return res.data;
+  } catch (error) {
+    handleApiError(error); // Handle API errors
+    throw new Error("Failed to fetch past rides"); // Throw custom error
+  }
+};
+
+export const cancelPublishedRide = async (rideId) => {
+  try {
+    const res = await API.post("/rides/cancelPublishedRide", { rideId });
+    // Assuming the API response contains transactions data
+    return res.data;
+  } catch (error) {
+    handleApiError(error); // Handle API errors
+    throw new Error("Failed to fetch past rides"); // Throw custom error
+  }
+};

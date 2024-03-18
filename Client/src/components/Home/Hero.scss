@@ -7,11 +7,10 @@
 // }
 
 .hero__unique {
-  background-image: url("https://www.jaipurcitycab.in/images/car2.png");
+  background-image: url("../../assets/carbg.png");
   background-blend-mode: lighten;
   background-attachment: fixed;
   height: 100vh;
-  width:100vw;
   background-size: cover;
   color: white;
   display: flex;
@@ -24,7 +23,7 @@
   height: 100%;
   width: 100%;
   position: absolute;
-  background: rgba(0,0,0,.3);
+  background: rgba(139, 34, 34, 0.5);
 }
 
 .hero__unique h1 {

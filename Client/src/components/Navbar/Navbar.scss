@@ -5,6 +5,13 @@
 //   box-sizing: border-box;
 //   font-family: 'Poppins', sans-serif;
 // }
+
+.dropdown:focus-within .dropdown-menu {
+  opacity:1;
+  transform: translate(0) scale(1);
+  visibility: visible;
+}
+
 nav{
   position: fixed;
   z-index: 99;
@@ -17,11 +24,14 @@ nav .wrapper-nav{
   max-width: 1300px;
   padding: 0px 30px;
   height: 70px;
-  line-height: 70px;
+  // line-height: 70px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+nav .wrapper-nav .desktop-item{
+  line-height: 70px;
 }
 .wrapper-nav .logo a{
   color: #f2f2f2;

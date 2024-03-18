@@ -1,159 +1,168 @@
-import React from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Navbar.scss";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/ContextProvider";
+import NotificationDialog from "../Notifications/NotificationDialog";
+const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const Navbar = () => {
+  const [showNotification, setShowNotification] = useState(false);
+  const userData = JSON.parse(localStorage.getItem("profile"));
+  const { signOut, wallet } = useContext(AuthContext);
+  const notificationRef = useRef(null);
+  const handleNotificationClick = () => {
+    setShowNotification(!showNotification);
+  };
+  const handleOutsideClick = (event) => {
+    if (
+      notificationRef.current &&
+      !notificationRef.current.contains(event.target)
+    ) {
+      setShowNotification(false);
+    }
+  };
+  useEffect(() => {
+    if (showNotification) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [showNotification]);
   return (
     <div>
       <nav>
-        <div class="wrapper-nav">
-          <div class="logo">
-            <a href="#">Logo</a>
+        <div className="wrapper-nav">
+          <div className="logo">
+            <Link to="#">Logo</Link>
           </div>
           <input type="radio" name="slider" id="menu-btn" />
           <input type="radio" name="slider" id="close-btn" />
-          <ul class="nav-links">
-            <label htmlFor="close-btn" class="btn close-btn">
-              <i class="fas fa-times"></i>
+          <ul className="nav-links">
+            <label htmlFor="close-btn" className="btn close-btn">
+              <i className="fas fa-times"></i>
             </label>
             <li>
-              <a href="/">Home</a>
+              <Link className="desktop-item" to="/">
+                Home
+              </Link>
             </li>
             <li>
-              <a href="/searchride" class="desktop-item">
+              <Link to="/searchride" className="desktop-item">
                 Ride
-              </a>
+              </Link>
               <input type="checkbox" id="showDrop" />
-              <label htmlFor="showDrop" class="mobile-item">
+              <label htmlFor="showDrop" className="mobile-item">
                 Ride
               </label>
-              <ul class="drop-menu">
+              <ul className="drop-menu">
                 <li>
-                  <a href="/searchride">Search Ride</a>
+                  <Link to="/searchride">Search Ride</Link>
                 </li>
                 <li>
-                  <a href="/publishride">Publish Ride</a>
+                  <Link to="/publishride">Publish Ride</Link>
                 </li>
                 <li>
-                  <a href="/driverRides">Driver Ride</a>
+                  <Link to="/driverRides">Driver Ride</Link>
                 </li>
                 <li>
-                  <a href="/bookedrides">Booked Ride</a>
+                  <Link to="/bookedrides">Booked Ride</Link>
+                </li>
+                <li>
+                  <Link to="/pastrides">Past Ride</Link>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#" class="desktop-item">
+              <Link to="#" className="desktop-item">
                 Payments
-              </a>
-              <input type="checkbox" id="showDrop" />
-              <label htmlFor="showDrop" class="mobile-item">
+              </Link>
+              <input type="checkbox" id="showsDrop" />
+              <label htmlFor="showsDrop" className="mobile-item">
                 Payments
               </label>
-              <ul class="drop-menu">
+              <ul className="drop-menu">
                 <li>
-                  <a href="/pendingpayments">Pending Payments</a>
+                  <Link to="/pendingpayments">Pending Payments</Link>
                 </li>
                 <li>
-                  <a href="/transaction">Transactions</a>
+                  <Link to="/transactions">Transactions</Link>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="/chats" class="desktop-item">
-                Messages
-              </a>
-              <input type="checkbox" id="showDrop" />
-              <label htmlFor="showDrop" class="mobile-item">
-                Messages
+              <Link to="/chats" className="desktop-item">
+                Chats
+              </Link>
+            </li>
+            <li>
+              <Link className="desktop-item" to="/riderequests">
+                Ride Requests
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="#"
+                className="relative desktop-item"
+                onClick={handleNotificationClick}
+              >
+                Notifications
+              </Link>
+              {showNotification && (
+                <div
+                  ref={notificationRef}
+                  className="absolute top-[70px] right-10 notification-dialog"
+                >
+                  {/* Content of your notification dialog */}
+                  <NotificationDialog onClose={handleNotificationClick} />
+                </div>
+              )}
+            </li>
+            <li>
+              <Link className="desktop-item" to={`/profile/${userData.userId}`}>
+                {/* {userData && (
+                  <img
+                    src={`${BASE_URL}/${userData.imageUrl}`}
+                    className="w-12 h-12 mr-4 rounded-full"
+                    alt="profile"
+                    style={{ borderRadius: "50%" }}
+                  />
+                )} */}
+                Profile
+              </Link>
+              <input type="checkbox" id="showProfile" />
+              <label htmlFor="showProfile" className="mobile-item">
+                Profile
               </label>
-              <ul class="drop-menu">
+              <ul className="drop-menu">
                 <li>
-                  <a href="/chats">Chats</a>
+                  <Link to={`/profile/${userData.userId}`}>My Profile</Link>
                 </li>
-                <li>
-                  <a href="/notifications">Notificatons</a>
+                <li onClick={signOut}>
+                  <Link className="desktop-item" to={`/login`}>
+                    {" "}
+                    Sign Out
+                  </Link>
                 </li>
               </ul>
             </li>
             {/* <li>
-              <a href="#" class="desktop-item">
-                Mega Menu
-              </a>
-              <input type="checkbox" id="showMega" />
-              <label htmlFor="showMega" class="mobile-item">
-                Mega Menu
-              </label>
-              <div class="mega-box">
-                <div class="content">
-                  <div class="row">
-                    <img
-                      src="https://fadzrinmadu.github.io/hosted-assets/responsive-mega-menu-and-dropdown-menu-using-only-html-and-css/img.jpg"
-                      alt=""
-                    />
-                  </div>
-                  <div class="row">
-                    <header>Design Services</header>
-                    <ul class="mega-links">
-                      <li>
-                        <a href="#">Graphics</a>
-                      </li>
-                      <li>
-                        <a href="#">Vectors</a>
-                      </li>
-                      <li>
-                        <a href="#">Business cards</a>
-                      </li>
-                      <li>
-                        <a href="#">Custom logo</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="row">
-                    <header>Email Services</header>
-                    <ul class="mega-links">
-                      <li>
-                        <a href="#">Personal Email</a>
-                      </li>
-                      <li>
-                        <a href="#">Business Email</a>
-                      </li>
-                      <li>
-                        <a href="#">Mobile Email</a>
-                      </li>
-                      <li>
-                        <a href="#">Web Marketing</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="row">
-                    <header>Security services</header>
-                    <ul class="mega-links">
-                      <li>
-                        <a href="#">Site Seal</a>
-                      </li>
-                      <li>
-                        <a href="#">VPS Hosting</a>
-                      </li>
-                      <li>
-                        <a href="#">Privacy Seal</a>
-                      </li>
-                      <li>
-                        <a href="#">Website design</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <Link className="desktop-item" to={`/profile/${userData.userId}`}>
+                Profile
+              </Link>
+            </li>
+            <li onClick={signOut}>
+              <Link className="desktop-item" to={`/login`}>
+                {" "}
+                Sign Out
+              </Link>
             </li> */}
-            <li>
-              <a href="/profile">Profile</a>
-            </li>
-            <li>
-              <a href="/riderequests">Ride Requests</a>
-            </li>
           </ul>
-          <label htmlFor="menu-btn" class="btn menu-btn">
-            <i class="fas fa-bars"></i>
+          <label htmlFor="menu-btn" className="btn menu-btn">
+            <i className="fas fa-bars"></i>
           </label>
         </div>
       </nav>
