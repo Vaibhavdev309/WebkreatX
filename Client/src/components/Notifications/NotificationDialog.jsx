@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CommonLoading from "../loader/CommonLoading";
 import { getLatestNotifications } from "../../Api/userApi";
-import "./Notification.scss";
+import "./notification.scss";
 
 const NotificationDialog = ({ onClose }) => {
   const [notifications, setNotifications] = useState([]);
