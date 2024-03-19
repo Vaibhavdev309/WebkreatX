@@ -10,7 +10,7 @@ export default function PassengersList(props) {
   const [Verify, setVerify] = useState(true);
   const [code, setCode] = useState({});
   const [loading, setLoading] = useState(false);
-  
+
   const sendCode = async (id) => {
     if (!code[id]) return;
     setLoading(true);
@@ -20,7 +20,7 @@ export default function PassengersList(props) {
         const { codeVerified, rideCancelled } = res.data;
         setVerify(codeVerified);
         const rides = props.rides;
-        
+
         modifyRide(rides, props.rideId, id, codeVerified, rideCancelled);
 
         props.updateRides(rides);
@@ -47,7 +47,7 @@ export default function PassengersList(props) {
           </span>
         </div>
       )}
-      {loading&&<CommonLoading/>}
+      {loading && <CommonLoading />}
       {passengers.map((value, key) => (
         <div key={key} className="border-b border-gray-300 py-4">
           <Link to={`/profile/${value.passengerId}`}>

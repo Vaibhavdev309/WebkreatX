@@ -29,21 +29,22 @@ export default function PublishRide() {
   const destiantionRef = useRef();
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error("Error getting user's location:", error);
-          toast.error("Error getting user's location");
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-      toast.error("Geolocation is not supported by this browser.");
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(
+    //     (position) => {
+    //       const { latitude, longitude } = position.coords;
+    //       setCurrentLocation({ lat: latitude, lng: longitude });
+    //     },
+    //     (error) => {
+    //       console.error("Error getting user's location:", error);
+    //       toast.error("Error getting user's location");
+    //     }
+    //   );
+    // } else {
+    //   console.error("Geolocation is not supported by this browser.");
+    //   toast.error("Geolocation is not supported by this browser.");
+    // }
+    setCurrentLocation({ lat: 25.4934, lng: 81.8627 });
   }, []);
 
   if (!isLoaded) {
@@ -297,35 +298,36 @@ export default function PublishRide() {
               />
             </div>
           </div>
-        </div>
-        <div className=" border w-[80%] m-auto flex flex-col gap-2">
-          <div className="flex space-x-4 m-auto ">
+          <div className="  w-[80%] m-auto flex flex-col gap-2 mt-2">
+            <div className="flex space-x-4 m-auto ">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
+                onClick={calculateRoute}
+                disabled={routeLoading}
+              >
+                Calculate Routes{routeLoading && <ButtonLoadingSpinner />}
+              </button>
+              <button
+                className="p-2 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-400"
+                onClick={clearRoute}
+                disabled={routeLoading}
+              >
+                Clear Routes
+              </button>
+            </div>
             <button
               type="submit"
-              className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
-              onClick={calculateRoute}
-              disabled={routeLoading}
+              className="px-4 py-2 bg-pink-500 w-[50%] m-auto text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
+              onClick={handlePublishRide}
+              disabled={isPublishing}
             >
-              Calculate Routes{routeLoading && <ButtonLoadingSpinner />}
-            </button>
-            <button
-              className="p-2 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-400"
-              onClick={clearRoute}
-              disabled={routeLoading}
-            >
-              Clear Routes
+              Publish Ride
+              {isPublishing && <ButtonLoadingSpinner />}
             </button>
           </div>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-pink-500 w-[50%] m-auto text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
-            onClick={handlePublishRide}
-            disabled={isPublishing}
-          >
-            Publish Ride
-            {isPublishing && <ButtonLoadingSpinner />}
-          </button>
         </div>
+
         {directionsResponses && (
           <div className=" mt-4 p-4 border w-[80%] m-auto flex flex-col gap-4 overflow-y-auto h-[200px]">
             {directionsResponses.routes.map((route, index) => (

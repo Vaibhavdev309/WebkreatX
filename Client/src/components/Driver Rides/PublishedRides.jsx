@@ -17,12 +17,13 @@ export default function PublishedRides() {
   const [center, setCenter] = useState(null);
   useEffect(() => {
     // Get user's live location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setCenter({ lat: latitude, lng: longitude });
-      });
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     const { latitude, longitude } = position.coords;
+    //     setCenter({ lat: latitude, lng: longitude });
+    //   });
+    // }
+    setCenter({ lat: 25.4934, lng: 81.8627 });
   }, []);
   useEffect(() => {
     const fetchRides = async () => {
@@ -106,28 +107,17 @@ export default function PublishedRides() {
               </p>
 
               {/* commented one is the main code ,next one is for testing */}
-              {/* {!value.rideCancelled && value.codeVerified && (
+              {!value.rideCancelled && value.codeVerified && (
                 <button
                   onClick={() => {
                     setRating(value.passengers);
                   }}
-                  onc
                   className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
                 >
                   Rate Passengers
                 </button>
-              )} */}
+              )}
               <div className="flex gap-2">
-                {
-                  <button
-                    onClick={() => {
-                      setRating(value.passengers);
-                    }}
-                    className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
-                  >
-                    Rate Passengers
-                  </button>
-                }
                 {!value.rideCancelled && !value.codeVerified && (
                   <button
                     onClick={() => cancellationHandler(value._id)}
@@ -166,7 +156,7 @@ export default function PublishedRides() {
       )}
       {passengers && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-lg z-50">
-          <div className="bg-white rounded-lg shadow-lg p-8 z-50">
+          <div className="bg-white rounded-lg shadow-lg w-[80vw] p-8 z-50">
             <div className="flex container mt-8">
               <PassengersList
                 rides={rides}

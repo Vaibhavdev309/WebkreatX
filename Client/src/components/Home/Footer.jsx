@@ -44,7 +44,7 @@ const Footer = () => {
               <div className="copyright-text">
                 <p>
                   Copyright &copy; 2018, All Right Reserved{" "}
-                  <a href="https://codepen.io/anupkumar92/">Anup</a>
+                  <a href="https://codepen.io/anupkumar92/">WebKreatX</a>
                 </p>
               </div>
             </div>

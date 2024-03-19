@@ -38,11 +38,11 @@ export default function RegisterComponent() {
   const sendotp = async () => {
     try {
       const res = await signUpOTP({ email });
-      if (!res.error) {
+      if (res.data) {
         setOtpId(res.data._id);
         toast.success("OTP sent successfully.");
       } else {
-        toast.error("Email address already exists.");
+        toast.error("Email error.");
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
@@ -95,31 +95,19 @@ export default function RegisterComponent() {
             />
             <label>Password</label>
           </div>
-          <a onClick={handleSignUp}>
+          <a className="cursor-pointer" onClick={handleSignUp}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-            <div>
-              {loading ? (
-                <div>Loading...</div>
-              ) : (
-                <div>Sign Up</div>
-              )}
-            </div>
+            <div>{loading ? <div>Loading...</div> : <div>Sign Up</div>}</div>
           </a>
-          <a onClick={sendotp}>
+          <a className="cursor-pointer" onClick={sendotp}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-            <div>
-              {loading ? (
-                <div>Loading...</div>
-              ) : (
-                <div>Send OTP</div>
-              )}
-            </div>
+            <div>{loading ? <div>Loading...</div> : <div>Send OTP</div>}</div>
           </a>
         </form>
       </div>

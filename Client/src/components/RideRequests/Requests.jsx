@@ -31,12 +31,13 @@ export default function Requests() {
 
   useEffect(() => {
     // Get user's live location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setUserLocation({ lat: latitude, lng: longitude });
-      });
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     const { latitude, longitude } = position.coords;
+    //     setUserLocation({ lat: latitude, lng: longitude });
+    //   });
+    // }
+    setUserLocation({ lat: 25.4934, lng: 81.8627 });
   }, []);
 
   function convertToAMPM(time) {

@@ -3,10 +3,7 @@ import FallbackLoading from "../loader/FallbackLoading";
 import { AuthContext } from "../../context/ContextProvider";
 import { getPastRides } from "../../Api/rideApi";
 import PastRide from "./PastRide";
-<<<<<<< HEAD
 const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
-=======
->>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
 
 const PastRides = () => {
   const [pastRides, setPastRides] = useState(null);
@@ -32,10 +29,7 @@ const PastRides = () => {
     };
     fetchPastRides();
   }, []);
-<<<<<<< HEAD
   console.log(pastRides);
-=======
->>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
   return (
     <div>
       <div className=" dark:bg-gray-900 dark:text-black text-gray-600 h-screen flex pt-[70px] overflow-hidden text-sm">
@@ -44,56 +38,15 @@ const PastRides = () => {
             <div className="flex-grow  dark:bg-gray-900 overflow-y-auto">
               <div className="sm:px-7 sm:pt-7 px-4 p-2 flex flex-col w-full border-b border-gray-200  dark:bg-gray-900 dark:text-black dark:border-gray-800 sticky top-0">
                 <div className="flex w-full items-center">
-<<<<<<< HEAD
                   <div className="flex text-white items-center text-3xl dark:text-black">
                     {userData && (
                       <div className="flex items-center">
-                        <img
-                          src={`${BASE_URL}/${userData.imageUrl}`}
-                          className="w-12 h-12 mr-4 rounded-full"
-                          alt="profile"
-                          style={{ borderRadius: "50%" }}
-                        />
                         <span>{userData.name}</span>
                       </div>
                     )}
                   </div>
                   <div className="ml-auto sm:flex hidden items-center justify-end">
                     <div className="text-right"></div>
-=======
-                  <div className="flex items-center text-3xl text-gray-900 dark:text-black">
-                    <img
-                      src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512"
-                      className="w-12 mr-4 rounded-full"
-                      alt="profile"
-                    />
-                    {userData && userData.name}
-                  </div>
-                  <div className="ml-auto sm:flex hidden items-center justify-end">
-                    <div className="text-right">
-                      <div className="text-xs text-gray-400 dark:text-gray-400">
-                        Account balance:
-                      </div>
-                      <div className="text-gray-900 text-lg dark:text-black">
-                        $2,794.00
-                      </div>
-                    </div>
-                    <button className="w-8 h-8 ml-4 text-gray-400 shadow dark:text-gray-400 rounded-full flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="w-4"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
-                      </svg>
-                    </button>
->>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
                   </div>
                 </div>
               </div>
@@ -122,12 +75,6 @@ const PastRides = () => {
                       <th className="font-normal text-center px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
                         Date
                       </th>
-<<<<<<< HEAD
-=======
-                      <th className="font-normal text-center px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">
-                        Time
-                      </th>
->>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
                     </tr>
                     {pastRides &&
                       pastRides.map((pastRide, index) => (
@@ -142,11 +89,8 @@ const PastRides = () => {
                           date={pastRide.date}
                           time={pastRide.time}
                           polyline={pastRide.overview_polyline}
-<<<<<<< HEAD
                           sourceCo={pastRide.sourceCo}
                           destinationCo={pastRide.destinationCo}
-=======
->>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343
                         />
                       ))}
                   </thead>
@@ -162,8 +106,3 @@ const PastRides = () => {
 };
 
 export default PastRides;
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 17ce2642c621ba65f19e6aafd24c012af77ec343

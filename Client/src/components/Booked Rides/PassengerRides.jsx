@@ -29,21 +29,22 @@ export default function PassengerRides() {
     fetchRides();
   }, [reload]);
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCenter({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error("Error getting user's location:", error);
-          toast.error("Error getting user's location");
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-      toast.error("Geolocation is not supported by this browser.");
-    }
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(
+    //     (position) => {
+    //       const { latitude, longitude } = position.coords;
+    //       setCenter({ lat: latitude, lng: longitude });
+    //     },
+    //     (error) => {
+    //       console.error("Error getting user's location:", error);
+    //       toast.error("Error getting user's location");
+    //     }
+    //   );
+    // } else {
+    //   console.error("Geolocation is not supported by this browser.");
+    //   toast.error("Geolocation is not supported by this browser.");
+    // }
+    setCenter({ lat: 25.4934, lng: 81.8627 });
   }, []);
   function convertToAMPM(time) {
     // Split the time string into hours and minutes
@@ -130,10 +131,8 @@ export default function PassengerRides() {
                 {value.vehicleType}
               </p>
 
-              {/* commented one is the main code ,next one is for testing */}
-              {/* {!value.rideCancelled &&
-                value.codeVerified &&
-                 (
+              <div className="flex gap-2">
+                {!value.rideCancelled && value.codeVerified && (
                   <button
                     onClick={() => {
                       setRating(value);
@@ -142,16 +141,7 @@ export default function PassengerRides() {
                   >
                     Rate Co-riders
                   </button>
-                )} */}
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    setRating(value);
-                  }}
-                  className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 focus:outline-none focus:ring focus:ring-pink-400"
-                >
-                  Rate Co-riders
-                </button>
+                )}
 
                 {!value.rideCancelled && !value.codeVerified && (
                   <button

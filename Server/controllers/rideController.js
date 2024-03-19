@@ -539,7 +539,7 @@ const cancelRide = async (req, res) => {
     const newTransaction = new Transaction({
       intentId: refund.payment_intent,
       amountPaid: refund.amount,
-      latest_charge: refund.charge,
+      latest_charge: refund.charge / 100,
       paidBy: "65f551b716afb9bbd90758c0",
       paidTo: prevTransaction.paidBy,
       unitCost: prevTransaction.unitCost,
@@ -590,7 +590,7 @@ const cancelPublishedRide = async (req, res) => {
       );
 
       const refund = await stripe.refunds.create({
-        charge: prevTransaction.latest_charge,
+        charge: prevTransaction.latest_charge / 100,
       });
 
       if (refund.status !== "succeeded") {
@@ -604,7 +604,7 @@ const cancelPublishedRide = async (req, res) => {
       const newTransaction = new Transaction({
         intentId: refund.payment_intent,
         amountPaid: refund.amount,
-        latest_charge: refund.charge,
+        latest_charge: refund.charge / 100,
         paidBy: "65f551b716afb9bbd90758c0",
         paidTo: prevTransaction.paidBy,
         unitCost: prevTransaction.unitCost,

@@ -6,7 +6,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/searchride");
+    navigate("/login");
   };
 
   return (

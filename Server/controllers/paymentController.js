@@ -50,7 +50,7 @@ const checkout = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: process.env.CLIENT_URL,
+      success_url: process.env.CLIENT_TRANSACTION,
       cancel_url: `${process.env.CLIENT_URL}/paymentFailed`,
       customer_email: data.email,
       payment_intent_data: {
